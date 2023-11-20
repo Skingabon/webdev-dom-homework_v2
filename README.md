@@ -7,3 +7,5 @@ https://glebkaf.github.io/webdev-dom-homework/
 ## Как разрабатывать
 
 Открой index.html в браузере
+
+Приложение доступно по ссылке: https://skingabon.github.io/webdev-dom-homework_v2/
