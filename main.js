@@ -2,6 +2,7 @@ import { getTodo, postTodo, toggleLike } from "./api.js";
 import { renderComment } from "./render.js";
 import { setToken, token, userName } from "./autorize.js";
 import { format } from "date-fns";
+import _ from "lodash";
 const buttonElement = document.getElementById("add-button");
 
 export let comments = [];
@@ -86,7 +87,7 @@ export function apiGet() {
     const apiComment = responseData.comments.map((comment) => {
       return {
         id: comment.id,
-        name: comment.author.name,
+        name: _.capitalize(comment.author.name),
         // data: createDate(comment.date),
         data: createDate,
         text: comment.text,
