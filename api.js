@@ -1,105 +1,69 @@
-import { token } from "./autorize.js";
-import { apiGet } from "./main.js";
-
-export function getTodo() {
-  return fetch(
-    "https://wedev-api.sky.pro/api/v2/artem-katkov/comments",
-    {
-      metod: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      return response.json();
-    })
-}
-
-export function postTodo({ textInApi, nameInApi, token }) {
-  return fetch("https://wedev-api.sky.pro/api/v2/artem-katkov/comments"
-    , {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        text: textInApi
-          .replaceAll("<", "&lt")
-          .replaceAll(">", "&gt")
-          .replaceAll("&", "&amp;")
-          .replaceAll('"', "&quot;"),
-        name: nameInApi
-          .replaceAll("<", "&lt")
-          .replaceAll(">", "&gt")
-          .replaceAll("&", "&amp;")
-          .replaceAll('"', "&quot;"),
-        forceError: true,
-      })
-    })
-}
-
-export function login({ login, password }) {
-  console.log("Я в ЛОГИНЕ");
-  console.log(login);
-  console.log(password);
-  return fetch("https://wedev-api.sky.pro/api/user/login"
-    , {
-      method: "POST",
-      body: JSON.stringify({
-        login,
-        password,
-      }),
-    })
-    .then((response) => {
-      if (response.status === 400) {
-        throw new Error("Неверный логин или пароль");
-      }
-      return response.json();
-    });
-}
-
-export function deleteCommentApi({ id }) {
-  return fetch("https://wedev-api.sky.pro/api/v2/artem-katkov/comments/" + id, {
-    method: "DELETE",
+const host = "https://webdev-hw-api.vercel.app/api/v2/todos";
+export function getTodos({ token }) {
+  return fetch(host, {
+    method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token,
     },
   }).then((response) => {
-    console.log(response);
-    if (response.status === 500) {
-      throw new Error("Сервер не доступен")
-    } else {
-      return response.json();
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
     }
+    return response.json();
   });
 }
-
-export function toggleLike({ id }) {
-  return fetch(`https://wedev-api.sky.pro/api/v2/artem-katkov/comments/${id}/toggle-like`, {
-    method: "POST",
+export function deleteTodo({ token, id }) {
+  return fetch("https://webdev-hw-api.vercel.app/api/todos/" + id, {
+    method: "DELETE",
     headers: {
-      Authorization: `Bearer ${token}`,
-    }
+      Authorization: token,
+    },
+  }).then((response) => {
+    return response.json();
+  });
+}
+export function addTodo({ text, token }) {
+  return fetch(host, {
+    method: "POST",
+    body: JSON.stringify({
+      text,
+    }),
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    return response.json();
   });
 }
 
-export function register({ login, password, name }) {
-  console.log("Я в регистрации");
-  console.log(login);
-  console.log(password);
-  console.log(name);
-  return fetch("https://wedev-api.sky.pro/api/user"
-    , {
-      method: "POST",
-      body: JSON.stringify({
-        login,
-        password,
-        name,
-      }),
-    }).then((response) => {
-      if (response.status === 400) {
-        throw new Error("Такой пользователь уже существует");
-      }
-      return response.json();
-    });
+// https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
+export function registerUser({ login, password, name }) {
+  return fetch("https://webdev-hw-api.vercel.app/api/user", {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      password,
+      name,
+    }),
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Такой пользователь уже существует");
+    }
+    return response.json();
+  });
+}
+
+export function loginUser({ login, password }) {
+  return fetch("https://webdev-hw-api.vercel.app/api/user/login", {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      password,
+    }),
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Неверный логин или пароль");
+    }
+    return response.json();
+  });
 }
