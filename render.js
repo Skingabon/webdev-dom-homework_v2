@@ -29,7 +29,7 @@ export const renderComment = () => {
   const commentsHTML = comments
     .map((comment, index) => {
       //из ДЗ17 беру дату из модуля
-      const createDate = format(new Date(comment.data), "dd/MM/yyyy hh:mm");
+      const createDate = format(new Date(comment.data), "dd-MM-yyyy hh:mm");
       return `
     <li data-index="${index}" class="comment">
 

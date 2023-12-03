@@ -7,10 +7,6 @@ const buttonElement = document.getElementById("add-button");
 
 export let comments = [];
 
-const createDate = format(new Date(comment.date), "MM-dd-yyyy hh:mm");
-const now = new Date();
-format(now, "MM-dd-yyyy hh:mm"); // 03-26-2023 10:33
-
 function correctDate(date) {
   let currentDate = new Date(date);
   let todayDay = currentDate.getDate();
@@ -85,6 +81,9 @@ export function apiGet() {
     console.log(responseData);
 
     const apiComment = responseData.comments.map((comment) => {
+      const createDate = format(new Date(comment.date), "MM-dd-yyyy hh:mm");
+      const now = new Date();
+      format(now, "MM-dd-yyyy hh:mm"); // 03-26-2023 10:33
       return {
         id: comment.id,
         name: _.capitalize(comment.author.name),
