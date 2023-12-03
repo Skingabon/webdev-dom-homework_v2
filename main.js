@@ -6,7 +6,7 @@ const buttonElement = document.getElementById("add-button");
 
 export let comments = [];
 
-const createDate = format(new Date(comments.created_at), "MM///dd-yyyy hh:mm");
+const createDate = format(new Date(comment.date), "MM-dd-yyyy hh:mm");
 const now = new Date();
 format(now, "MM-dd-yyyy hh:mm"); // 03-26-2023 10:33
 
@@ -87,7 +87,8 @@ export function apiGet() {
       return {
         id: comment.id,
         name: comment.author.name,
-        data: createDate(comment.date),
+        // data: createDate(comment.date),
+        data: createDate,
         text: comment.text,
         like: comment.likes,
         isLiked: comment.isLiked,
