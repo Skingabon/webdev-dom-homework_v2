@@ -11,7 +11,7 @@ export function autorizeRender(isLoginMode = true) {
     const appHTML = document.getElementById('app');
     const loginHTML = `<div class = 'autorizeForm'> 
         <h1 class = 'form-title'>Форма ${
-            isLoginMode ? 'входа' : 'Регистрации'
+            isLoginMode ? 'Входа' : 'Регистрации'
         }</h1>
         <div>
         ${
@@ -37,7 +37,7 @@ id="input-name2" />
             isLoginMode ? 'Войти' : 'Зарегистрироваться'
         }</button>
         <button class="add-form-button" id="toggle-button">Перейти ${
-            isLoginMode ? 'К регистрации' : 'ко входу'
+            isLoginMode ? 'к регистрации' : 'ко входу'
         } </button>
 </div>
 </div>
